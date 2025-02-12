@@ -1,9 +1,3 @@
-extern crate chrono;
-extern crate term;
-extern crate toml;
-
-extern crate gumdrop;
-
 use gumdrop::Options;
 
 use std::env;
@@ -27,7 +21,6 @@ struct ManifestInfo {
 #[derive(Debug, Deserialize)]
 struct PackageInfo {
     name: String,
-    version: String,
     authors: Vec<String>,
     description: Option<String>,
     repository: Option<String>,
@@ -122,7 +115,7 @@ fn main() {
     };
     let mut cargo_content = String::new();
     if let Err(e) = cargo_file.read_to_string(&mut cargo_content) {
-        panic!(e);
+        panic!("{}", e);
     }
 
     let t: ManifestInfo = toml::from_str(cargo_content.as_str()).unwrap();
